@@ -1,9 +1,17 @@
+#dfs act like stack
+
+from collections import deque
 def dfs(graph, v, visited):
     visited[v] = True
-    print(v, end = ' ')
-    for i in graph[v]:
-        if not visited[i]:
-            dfs(graph, i, visited)
+    queue = deque([v])
+
+    while queue:
+        w = queue.popleft()
+        print(w, end=' ')
+        for node in graph[w]:
+            if not visited[node]:
+                visited[node] = True
+                queue.append(node)
 
 graph = [
     [],
@@ -19,10 +27,3 @@ graph = [
 
 visited = [False] * 9
 dfs(graph, 1, visited)
-
-def dfs(graph, v, visited):
-    visited[v] = True
-    print(v, end=' ')
-    for node in graph[v]:
-        if not visited[node]:
-            dfs(graph, node, visited)
