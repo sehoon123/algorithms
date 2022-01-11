@@ -3,7 +3,7 @@
 from collections import deque
 def dfs(graph, v, visited):
     visited[v] = True
-    queue = deque([v])
+    queue = deque(v)
 
     while queue:
         w = queue.popleft()
