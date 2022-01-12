@@ -20,16 +20,28 @@ for i in range(len(adj)):
 print(adj)
 
 visited=[False]*(n+1)
-def dfs(adj, start, visited):
+# def dfs(adj, start, visited):
+#     visited[start] = True
+#     print(start, end=" ")
+#     for node in adj[start]:
+#         if not visited[node]:
+#             dfs(adj, node, visited)
+#
+# dfs(adj, v, visited)
+
+def bfs(adj, start, visited):
     visited[start] = True
-    print(start, end=" ")
-    for node in adj[start]:
-        if not visited[node]:
-            dfs(adj, node, visited)
+    queue = collections.deque()
+    queue.append(start)
+    while queue:
+        node = queue.popleft()
+        print(node, end=" ")
+        for n in adj[node]:
+            if not visited[n]:
+                visited[n] = True
+                queue.append(n)
 
-dfs(adj, v, visited)
-
-
+bfs(adj, v, visited)
 # edges.sort()
 #
 # visited =[False]*(n+1)
