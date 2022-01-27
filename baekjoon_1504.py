@@ -22,7 +22,7 @@ for k in range(1, N+1):
         for j in range(1, N+1):
             graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
 
-distance = graph[1][v1] + graph[v1][v2] + graph[v2][N]
+distance = min(graph[1][v1] + graph[v1][v2] + graph[v2][N], graph[1][v2] + graph[v2][v1] + graph[v1][N])
 
 if distance >= INF:
     print(-1)
