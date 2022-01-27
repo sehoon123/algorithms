@@ -1,30 +1,41 @@
 import sys
+import heapq
+
+def dijkstra(start, end):
+    q = []
+    heapq.heappush(q, (0, start))
+    dist = [INF] * (N + 1)
+    dist[start] = 0
+    while q:
+        cost, node = heapq.heappop(q)
+        if dist[node] < cost:
+            continue
+        for next_node, next_cost in graph[node]:
+            if next_cost + cost < dist[next_node]:
+                dist[next_node] = next_cost + cost
+                heapq.heappush(q, (dist[next_node], next_node))
+
+    return dist[end]
+
+
+
+
 
 input = sys.stdin.readline
 N, E = map(int, input().split())
 INF = int(1e9)
-graph = [[INF]*(N+1) for _ in range(N+1)]
-
-for i in range(1, N+1):
-    for j in range(1, N+1):
-        if i == j:
-            graph[i][j] = 0
+graph = [[] for _ in range(N+1)]
 
 for _ in range(E):
     a, b, c = map(int, input().split())
-    graph[a][b] = c
-    graph[b][a] = c
+    graph[a].append((b, c))
+    graph[b].append((a, c))
 
 v1, v2 = map(int, input().split())
 
-for k in range(1, N+1):
-    for i in range(1, N+1):
-        for j in range(1, N+1):
-            graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
+result = min(dijkstra(1,v1)+dijkstra(v1,v2) + dijkstra(v2,N), dijkstra(1,v2)+dijkstra(v2,v1)+dijkstra(v1,N))
 
-distance = min(graph[1][v1] + graph[v1][v2] + graph[v2][N], graph[1][v2] + graph[v2][v1] + graph[v1][N])
-
-if distance >= INF:
+if result >= INF:
     print(-1)
 else:
-    print(distance)
+    print(result)
