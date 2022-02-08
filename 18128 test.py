@@ -5,8 +5,10 @@ input = sys.stdin.readline
 n, w = map(int, input().split())
 graph = []
 pond = []
-water = [[0] * n for _ in range(n)]
-movement = [[0] * n for _ in range(n)]
+#물이 차오르는 날자
+water = [[-1] * n for _ in range(n)]
+
+max_water = -1
 
 dx = [1, -1, 0, 0, 1, -1, 1, -1]
 dy = [0, 0, 1, -1, 1, -1, -1, 1]
@@ -19,39 +21,43 @@ for i in range(n):
 q = deque()
 for v in pond:
     q.append((v[0] - 1, v[1] - 1))
-    water[v[0] - 1][v[1] - 1] = 1
+    water[v[0] - 1][v[1] - 1] = 0
 
-def bfs():
+def WaterDepth():
+    global max_water
     while q:
         x, y = q.popleft()
         for i in range(4):
             nx = x + dx[i]
             ny = y + dy[i]
             if 0 <= nx < n and 0 <= ny < n:
-                if water[nx][ny] == 0:
-
+                if water[nx][ny] == -1:
                     water[nx][ny] = water[x][y] + 1
                     q.append([nx, ny])
+    for i in range(n):
+        for j in range(n):
+            if water[i][j] > max_water:
+                max_water = water[i][j]
 
-def move():
+def check(mid):
+    # 위치를 방문한 여부
+    visited = [[0] * n for _ in range(n)]
+    visited[0][0] = 1
+
     location = deque()
     location.append([0, 0])
-    movement[0][0] = 1
+
     while location:
         x, y = location.popleft()
+        if (x == n - 2 and y == n - 1) or (x == n - 1 and y == n - 2) or (x == n-2 and y == n-2):
+            return True
         for i in range(8):
             nx = x + dx[i]
             ny = y + dy[i]
-            if 0 <= nx < n and 0 <= ny < n:
-                if graph[nx][ny] == '1' and movement[nx][ny] == 0:
-                    movement[nx][ny] = movement[x][y] + 1
+            if 0 <= nx < n and 0 <= ny < n and visited[nx][ny] == 0 and graph[nx][ny] == '1' and water[nx][ny] <= mid:
+                    visited[nx][ny] = 1
                     location.append([nx, ny])
-
-def check(mid):
-    if movement[n-1][n-1] == 0:
-        return False
-    return True
-
+    return False
 
 
 
@@ -67,10 +73,7 @@ def bianry(left, right):
             left = mid + 1
     return result
 
-bfs()
-for v in water:
-    print(v)
-print(":::::::::::::::::::::::::::::::::::::::")
-move()
-for v in movement:
-    print(v)
+WaterDepth()
+left, right = 0, max_water
+result = bianry(left, right)
+print(result)
