@@ -1,3 +1,4 @@
+import copy
 import sys
 from collections import deque
 input = sys.stdin.readline
@@ -16,27 +17,27 @@ for _ in range(l):
 def bfs(i, j):
     q = deque()
     q.append((i, j))
-    now = 0
+    cnt = 0
     while q:
         x, y = q.popleft()
         for i in range(4):
             nx = x + dx[i]
             ny = y + dy[i]
-            if 0 <= nx < l and 0 <= ny < w and graph[nx][ny] != 'W' and visit[nx][ny] == 0:
-                visit[nx][ny] = 1
+            if 0 <= nx < l and 0 <= ny < w and temp[nx][ny] == 'L':
+                temp[nx][ny] = 'W'
                 q.append((nx, ny))
-                graph[nx][ny] = graph[x][y] + 1
-                now = max(now, graph[nx][ny])
-    return now
+                distance[nx][ny] = distance[x][y] + 1
+                cnt = max(cnt, distance[nx][ny])
+    return cnt
 
 
 MAX = 0
 for i in range(l):
     for j in range(w):
-        if graph[i][j] != 'W':
-            visit = [[0] * w for _ in range(l)]
-            graph[i][j] = 0
-            visit[i][j] = 1
+        temp = copy.deepcopy(graph)
+        if temp[i][j] == 'L':
+            temp[i][j] = 'W'
+            distance = [[0] * w for _ in range(l)]
             MAX = max(MAX, bfs(i, j))
 
 print(MAX)
