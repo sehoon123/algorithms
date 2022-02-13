@@ -1,6 +1,2 @@
-import sys
-
-input = sys.stdin.readline
-
-s = input().strip()
-print(len(s))
+for i in range(10005):
+    print(i,end="")
