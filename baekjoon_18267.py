@@ -2,7 +2,7 @@ import sys
 input = sys.stdin.readline
 sys.setrecursionlimit(200000)
 
-MAX = 10
+MAX = 100010
 
 N, M = map(int, input().split())
 adj = [[] for _ in range(MAX)]
