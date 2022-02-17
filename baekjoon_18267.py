@@ -1,6 +1,7 @@
 import sys
-input = sys.stdin.readline
-sys.setrecursionlimit(200000)
+# input = sys.stdin.readline
+sys.stdin = open('7.in', 'r')
+sys.setrecursionlimit(300000)
 
 MAX = 100010
 
