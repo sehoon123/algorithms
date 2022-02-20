@@ -1,7 +1,7 @@
 n, k = map(int, input().split())
 
-w = [0 for _ in range(101)]
-v = [0 for _ in range(101)]
+w = [0] * 101
+v = [0] * 101
 
 
 for i in range(n):
@@ -9,19 +9,19 @@ for i in range(n):
     w[i] = a
     v[i] = b
 
-d = [[0] * (101) for _ in range(100001)]
-def knapsack(a, b):
-    if d[a][b] > 0:
-        return d[a][b]
+cache = [[0] * (100001) for _ in range(101)]
+def knapsack(i, weight):
+    if cache[i][weight] > 0:
+        return cache[i][weight]
     if i == n:
         return 0
     n1 = 0
-    if b + w[a] <= k:
-        n1 = w[a] + knapsack(i+1, b + w[a])
-    n2 = knapsack(a+1, b)
+    if weight + w[i] <= k:
+        n1 = v[i] + knapsack(i + 1, weight + w[i])
+    n2 = knapsack(i + 1, weight)
 
-    d[a][b] = max(n1, n2)
-    return d[a][b]
+    cache[i][weight] = max(n1, n2)
+    return cache[i][weight]
 
 print(knapsack(0,0))
 
