@@ -7,13 +7,16 @@ while True:
     n = int(n)
     if n == 0 and m == 0.00:
         break
-    m = int(m * 100 + 0.5)
-    dp = [0] * (m+6)
+    m = int(m * 100)
+    candy = []
+    cache = [0] * (m + 1)
     for i in range(n):
         c, p = map(float, input().split())
-        p = int(p * 100 + 0.5)
-        for i in range(p, m+1):
-            dp[i] = max(dp[i], dp[i-p] + c)
+        candy.append((int(c), int(p*100)))
 
-    print(int(dp[m]))
+    for i in range(1, n+1):
+        for j in range(candy[i-1][1], m+1):
+            cache[j] = max(cache[j], cache[j-candy[i-1][1]] + candy[i-1][0])
+
+    print(cache[m])
 
