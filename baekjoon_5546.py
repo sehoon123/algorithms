@@ -1,4 +1,29 @@
 import sys
+<<<<<<< HEAD
+input = sys.stdin.readline
+
+n, k = map(int, input().split())
+temp = []
+p = [0] * (n+1)
+dp = [0]*(n+1)
+for _ in range(k):
+    day, pasta = map(int, input().split())
+    temp.append([day, pasta])
+    p[day] = pasta
+
+
+dp[0] = 1
+for i in range(1,n+1):
+    if p[i] != 0:
+        dp[i] = dp[i-1]
+    if p[i-1] == p[i-2]:
+        dp[i] = dp[i-1]*2
+    else:
+        dp[i] = dp[i-1]*3
+    
+print(dp)
+
+=======
 
 input = sys.stdin.readline
 
@@ -38,3 +63,4 @@ for i in range(2, N + 1):
 
 # N일째 되는날 1번 파스타를 1일연속먹은경우, 2일연속먹은경우, 2번파스타를 1일연속 먹은경우, 2일연속 먹은경우, ...
 print((dp[N][1][1] + dp[N][1][2] + dp[N][2][1] + dp[N][2][2] + dp[N][3][1] + dp[N][3][2]) % 10000)
+>>>>>>> 020e705b0162a5f5af0a1cd72fd2820aacb1af8c
