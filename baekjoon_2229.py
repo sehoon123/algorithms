@@ -13,6 +13,7 @@ for i in range(1, n+1):
         MIN = min(MIN, arr[j])
         dp[i] = max(dp[i], MAX-MIN + dp[j-1])
 
+print(dp)
 print(dp[-1])
 
 
