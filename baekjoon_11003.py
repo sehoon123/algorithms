@@ -15,4 +15,4 @@ for i in range(n):
     while idx < i-l+1:
         heapq.heappop(q)
         idx = q[0][1]
-    print(q)
+    print(q[0][0])
