@@ -19,3 +19,5 @@ for _ in range(n):
         heapq.heappush(min_heap, (bbb, bbb))
         heapq.heappush(max_heap, (-aaa, aaa))
     print(max_heap[0][1])
+    
+
